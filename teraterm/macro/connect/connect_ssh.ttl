@@ -1,0 +1,37 @@
+;ログイン情報
+USERNAME = 'username'
+PASSWORD = 'password'
+HOSTADDR = '172.17.71.90'
+
+;マクロのあるディレクトリパスを取得
+getdir macro_dir
+;messagebox macro_dir 'debug'
+
+;ログインコマンド生成
+COMMAND = HOSTADDR
+strconcat COMMAND ' /ssh /auth=password /user='
+strconcat COMMAND USERNAME
+strconcat COMMAND ' /passwd='
+strconcat COMMAND PASSWORD
+strconcat COMMAND ' /f='
+strconcat COMMAND macro_dir
+strconcat COMMAND '\inifile\'
+strconcat COMMAND 'sample_setting.ini'
+;messagebox COMMAND 'debug'
+
+;ログイン
+connect COMMAND
+
+;ログフォルダ格納先を指定
+log_dir = ''
+strconcat log_dir macro_dir
+strconcat log_dir '\log'
+;messagebox log_dir 'debug'
+changedir log_dir
+
+;ログ記録開始
+logopen 'test.log' 0 0
+
+;ログ記録終了
+; logclose
+

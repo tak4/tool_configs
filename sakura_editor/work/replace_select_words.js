@@ -2,6 +2,10 @@
 var before = 'old_test';
 var after = 'new_text';
 
+// Œã•ûQÆ
+// var before = '\\((\\d+),\\d+\\)';
+// var after = '($1)';
+
 // ‘I‘ğ•¶š—ñ‚ğæ“¾
 var text = Editor.GetSelectedString(0);
 if (text !== '') {

@@ -1,13 +1,15 @@
-;ログイン情報
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;接続情報
 USERNAME = 'username'
 PASSWORD = 'password'
-HOSTADDR = '172.17.71.90'
+HOSTADDR = 'xxx.xxx.xxx.xxx'
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;マクロのあるディレクトリパスを取得
 getdir macro_dir
 ;messagebox macro_dir 'debug'
 
-;ログインコマンド生成
+;接続パラメータを作成
 COMMAND = HOSTADDR
 strconcat COMMAND ' /ssh /auth=password /user='
 strconcat COMMAND USERNAME
@@ -19,7 +21,7 @@ strconcat COMMAND '\inifile\'
 strconcat COMMAND 'sample_setting.ini'
 ;messagebox COMMAND 'debug'
 
-;ログイン
+;接続
 connect COMMAND
 
 ;ログフォルダ格納先を指定
@@ -29,7 +31,8 @@ strconcat log_dir '\log'
 ;messagebox log_dir 'debug'
 changedir log_dir
 
-;ログ記録開始
+;ログ記録開始 テキストモード／追記モード 
+;ログ保存先がchangedir で指定したディレクトリにならない・・・
 logopen 'test.log' 0 0
 
 ;ログ記録終了

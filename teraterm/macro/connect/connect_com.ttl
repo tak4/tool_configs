@@ -1,8 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;接続情報
-USERNAME = 'takashi'
-PASSWORD = 'lindbergh'
-HOSTADDR = '192.168.1.3'
+COM_PORT_NUM = '1'
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;マクロのあるディレクトリパスを取得
@@ -10,19 +8,26 @@ getdir macro_dir
 ;messagebox macro_dir 'debug'
 
 ;接続パラメータを作成
-COMMAND = HOSTADDR
-strconcat COMMAND ' /ssh /auth=password /user='
-strconcat COMMAND USERNAME
-strconcat COMMAND ' /passwd='
-strconcat COMMAND PASSWORD
+COMMAND = ' /C='
+strconcat COMMAND COM_PORT_NUM
 strconcat COMMAND ' /f='
 strconcat COMMAND macro_dir
 strconcat COMMAND '\inifile\'
-strconcat COMMAND 'sample_ssh_setting.ini'
+strconcat COMMAND 'sample_com_setting.ini'
 ;messagebox COMMAND 'debug'
 
 ;接続
 connect COMMAND
+
+;ログフォルダ格納先を指定
+;log_dir = ''
+;strconcat log_dir macro_dir
+;strconcat log_dir '\log'
+;messagebox log_dir 'debug'
+;changedir log_dir
+
+gettime timestr "%Y%m%d-%H%M%S"
+sprintf2 filename 'console_%s.log' timestr
 
 ;ログフォルダ格納先を指定
 ; ini file でログ保存フォルダ指定している場合、
@@ -34,7 +39,7 @@ connect COMMAND
 ;changedir log_dir
 
 ;ログ記録開始 テキストモード／追記モード 
-logopen 'test.log' 0 0
+logopen filename 0 0
 
 ;ログ記録終了
 ; logclose

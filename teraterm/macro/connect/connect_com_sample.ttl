@@ -1,0 +1,19 @@
+connect '/C=1'
+
+; ユーザ名を取得
+getenv 'USERNAME' username
+; 日時を取得
+gettime timestr "%Y%m%d-%H%M%S"
+
+; ログファイル名に日時とユーザ名を入れる。
+sprintf2 filename 'console_%s_%s.log' username timestr
+
+; カレントディレクトリを変更する
+changedir 'D:\develop\github\tool_configs\teraterm\macro\connect\log'
+
+logopen filename 0 0
+logwrite 'Log start'#13#10
+logwrite '*****************************************************'#13#10
+;logclose
+
+end

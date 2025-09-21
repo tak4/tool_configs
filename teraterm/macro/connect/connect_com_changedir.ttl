@@ -10,10 +10,10 @@ getdir macro_dir
 ;接続パラメータを作成
 COMMAND = ' /C='
 strconcat COMMAND COM_PORT_NUM
-;strconcat COMMAND ' /f='
-;strconcat COMMAND macro_dir
-;strconcat COMMAND '\inifile\'
-;strconcat COMMAND 'sample_com_setting.ini'
+strconcat COMMAND ' /f='
+strconcat COMMAND macro_dir
+strconcat COMMAND '\inifile\'
+strconcat COMMAND 'sample_com_setting.ini'
 ;messagebox COMMAND 'debug'
 
 ;接続
@@ -23,16 +23,14 @@ gettime timestr "%Y%m%d-%H%M%S"
 sprintf2 filename 'console_%s.log' timestr
 
 ;ログフォルダ格納先を指定
-; ini file でログ保存フォルダ指定している場合、
-; changedirは効かない様子
-;log_dir = ''
+log_dir = ''
 strconcat log_dir macro_dir
 strconcat log_dir '\log'
 ;messagebox log_dir 'debug'
 changedir log_dir
 
 ;ログ記録開始 テキストモード／追記モード 
-logopen filename 0 0
+logopen filename 0 0 0 1
 
 ;ログ記録終了
 ; logclose

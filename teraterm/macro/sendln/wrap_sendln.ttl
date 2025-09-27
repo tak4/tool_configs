@@ -1,0 +1,11 @@
+window_title = ''
+gettitle window_title
+
+;messagebox window_title 'Debug'
+
+strcompare window_title 'Tera Term'
+if result = 0 then
+    include 'sendln.ttl'
+else
+    messagebox '許可されていません' 'エラー'
+endif

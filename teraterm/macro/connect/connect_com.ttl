@@ -23,6 +23,8 @@ gettime timestr "%Y%m%d-%H%M%S"
 sprintf2 filename 'console_%s.log' timestr
 
 ;ログフォルダ格納先を指定
+;changedirを機能させるには、
+;iniファイルでの Default Log Folderの指定を空欄にする必要がある
 log_dir = ''
 strconcat log_dir macro_dir
 strconcat log_dir '\log'

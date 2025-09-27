@@ -25,13 +25,13 @@ strconcat COMMAND 'sample_ssh_setting.ini'
 connect COMMAND
 
 ;ログフォルダ格納先を指定
-; ini file でログ保存フォルダ指定している場合、
-; changedirは効かない様子
-;log_dir = ''
-;strconcat log_dir macro_dir
-;strconcat log_dir '\log'
+;changedirを機能させるには、
+;iniファイルでの Default Log Folderの指定を空欄にする必要がある
+log_dir = ''
+strconcat log_dir macro_dir
+strconcat log_dir '\log'
 ;messagebox log_dir 'debug'
-;changedir log_dir
+changedir log_dir
 
 ;ログ記録開始 テキストモード／追記モード 
 logopen 'test.log' 0 0

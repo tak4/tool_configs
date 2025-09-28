@@ -1,4 +1,4 @@
-﻿// (行, 列) を (行)　にする
+// (行, 列) を (行)　にする
 var before_line_and_column = '\\((\\d+),\\d+\\)';
 var after_line_and_column = '($1)';
 
@@ -33,6 +33,7 @@ var folder_line = "";
 for (var i = 0; i < lines.length; i++) {
     if (regex_folder_line.test(lines[i])) {  // 正規表現でマッチするか確認
         folder_line = lines[i];
+        MessageBox(folder_line)
         break;
     }
 }
@@ -42,6 +43,7 @@ var base_folder = folder_line.replace(regex_folder_line, '$1');
 MessageBox(base_folder)
 
 // 行内の該当箇所をすべて置換
+// https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/RegExp
 // https://learn.microsoft.com/ja-jp/previous-versions/visualstudio/visual-studio-2010/efy6s3e6(v=vs.100)
 var convertedWord = select_string.replace(new RegExp(before_line_and_column, 'g'), after_line_and_column);
 convertedWord = convertedWord.replace(new RegExp(before_charcode, 'gm'), after_charcode);

@@ -32,22 +32,3 @@ Editor.SetDrawSwitch(1);
 // 再描画
 // Redraw() https://sakura-editor.github.io/help/HLP000187.html
 Editor.Redraw();
-
-
-
-
-// 行ごとに分割
-var lines = searchWord.split(/\r?\n/);
-var keyword = 'test'
-
-// 正規表現を作成（部分一致、エスケープが必要であれば適宜対応してください）
-var regex = new RegExp(keyword);
-
-// 検索して該当する行だけを抽出
-var resultLines = [];
-for (var i = 0; i < lines.length; i++) {
-    if (regex.test(lines[i])) {  // 正規表現でマッチするか確認
-		MessageBox("lines = " + lines[i]);
-        resultLines.push(lines[i]);
-    }
-}

@@ -1,3 +1,6 @@
+//
+// 選択した範囲内の文字列を置換する
+//
 // 置換したい前後の文字列を指定
 var before = 'old_test';
 var after = 'new_text';

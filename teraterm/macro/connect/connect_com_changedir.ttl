@@ -31,7 +31,9 @@ strconcat log_dir '\log'
 ;messagebox log_dir 'debug'
 changedir log_dir
 
-;ログ記録開始 テキストモード／追記モード 
+;ログ記録開始 
+;https://teratermproject.github.io/manual/4/ja/macro/command/logopen.html
+;テキストモード／追記モード／ASCII 非表示文字をログに書き込む／ログの行頭に時刻を追加
 logopen filename 0 0 0 1
 
 ;ログ記録終了

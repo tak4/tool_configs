@@ -1,62 +1,74 @@
-// (è¡Œ, åˆ—) ã‚’ (è¡Œ)ã€€ã«ã™ã‚‹
+// –{ƒR[ƒh‚ÍShift-JIS‚É‚µ‚Ä‚¨‚­•K—v‚ª‚ ‚é
+// “ú–{Œê‚ğŒŸõ‚·‚éÛAJScript‚ÍAGetSelectedString()‚Åæ“¾‚µ‚½•¶š—ñ‚ğ
+// Shift-JIS‚Åˆµ‚¤‚ç‚µ‚¢
+
+// “Áê•¶š‚ğƒGƒXƒP[ƒv‚·‚é
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// (s, —ñ) ‚ğ (s)@‚É‚·‚é
 var before_line_and_column = '\\((\\d+),\\d+\\)';
 var after_line_and_column = '($1)';
 
-// æ–‡å­—ã‚³ãƒ¼ãƒ‰è¡¨è¨˜ã‚’å‰Šé™¤ã™ã‚‹
+// •¶šƒR[ƒh•\‹L‚ğíœ‚·‚é
 var before_charcode = '(^.+)  \\[.+\\]:'
 var after_charcode = '$1:'
 
-// ãƒ•ã‚¡ã‚¤ãƒ«ã®å…ˆé ­ã«ç§»å‹•
+// ƒtƒ@ƒCƒ‹‚Ìæ“ª‚ÉˆÚ“®
 // GoFileTop() https://sakura-editor.github.io/help/HLP000228.html
 Editor.GoFileTop();
 
-// æç”»ã‚’ä¸€æ™‚åœæ­¢ï¼ˆé«˜é€ŸåŒ–ã®ãŸã‚ï¼‰
+// •`‰æ‚ğˆê’â~i‚‘¬‰»‚Ì‚½‚ßj
 // SetDrawSwitch() https://sakura-editor.github.io/help/HLP000268.html#SetDrawSwitch
 Editor.SetDrawSwitch(0);
 
-// å…¨é¸æŠ
+// ‘S‘I‘ğ
 // SelectAll() https://sakura-editor.github.io/help/HLP000044.html
 Editor.SelectAll()
 
-// é¸æŠç¯„å›²å–å¾—
+// ‘I‘ğ”ÍˆÍæ“¾
 // https://sakura-editor.github.io/help/HLP000268.html#GetSelectedString
 var select_string = Editor.GetSelectedString(0);
 
-// è¡Œã”ã¨ã«åˆ†å‰²
+// s‚²‚Æ‚É•ªŠ„
 var lines = select_string.split(/\r?\n/);
 
-// ãƒ•ã‚©ãƒ«ãƒ€è¡Œã‚’å–å¾—ã™ã‚‹ç‚ºã®æ­£è¦è¡¨ç¾ã‚’ä½œæˆ
-var regex_folder_line = /^ãƒ•ã‚©ãƒ«ãƒ€ +(.+)/;
+// ƒtƒHƒ‹ƒ_s‚ğæ“¾‚·‚éˆ×‚Ì³‹K•\Œ»‚ğì¬
+var regex_folder_line = /^ƒtƒHƒ‹ƒ_ +(.+)/;
 
-// æ¤œç´¢ã—ã¦è©²å½“ã™ã‚‹è¡Œã ã‘ã‚’æŠ½å‡º
+// ŒŸõ‚µ‚ÄŠY“–‚·‚és‚¾‚¯‚ğ’Šo
 var folder_line = "";
 for (var i = 0; i < lines.length; i++) {
-    if (regex_folder_line.test(lines[i])) {  // æ­£è¦è¡¨ç¾ã§ãƒãƒƒãƒã™ã‚‹ã‹ç¢ºèª
+    if (regex_folder_line.test(lines[i])) {  // ³‹K•\Œ»‚Åƒ}ƒbƒ`‚·‚é‚©Šm”F
         folder_line = lines[i];
-        MessageBox(folder_line)
+        // MessageBox(folder_line)
         break;
     }
 }
 
-// ãƒ•ã‚©ãƒ«ãƒ€åã®ã¿å–å¾—ã™ã‚‹
+// ƒtƒHƒ‹ƒ_–¼‚Ì‚İæ“¾‚·‚é
 var base_folder = folder_line.replace(regex_folder_line, '$1');
+// ––”ö‚É\‚Ü‚ÅÁ‚µ‚½‚¢‚Ì‚ÅA\‚ğ•t‚¯‚é
+base_folder = base_folder + "\\";
+// \‚ªŠÜ‚Ü‚ê‚é‚Ì‚ÅƒGƒXƒP[ƒv‚·‚é
+base_folder = escapeRegExp(base_folder);
 MessageBox(base_folder)
 
-// è¡Œå†…ã®è©²å½“ç®‡æ‰€ã‚’ã™ã¹ã¦ç½®æ›
+// s“à‚ÌŠY“–‰ÓŠ‚ğ‚·‚×‚Ä’uŠ·
 // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/RegExp
 // https://learn.microsoft.com/ja-jp/previous-versions/visualstudio/visual-studio-2010/efy6s3e6(v=vs.100)
 var convertedWord = select_string.replace(new RegExp(before_line_and_column, 'g'), after_line_and_column);
 convertedWord = convertedWord.replace(new RegExp(before_charcode, 'gm'), after_charcode);
 convertedWord = convertedWord.replace(new RegExp(base_folder, 'g'), '');
 
-// ç½®æ›å¾Œã®è¡Œã‚’æŒ¿å…¥
+// ’uŠ·Œã‚Ì•¶š—ñ‚ğ‘}“ü
 // InsText() https://sakura-editor.github.io/help/HLP000288.html
 Editor.InsText(convertedWord); 
 
-
-// æç”»ã‚’å†é–‹
+// •`‰æ‚ğÄŠJ
 Editor.SetDrawSwitch(1);
 
-// å†æç”»
+// Ä•`‰æ
 // Redraw() https://sakura-editor.github.io/help/HLP000187.html
 Editor.Redraw();

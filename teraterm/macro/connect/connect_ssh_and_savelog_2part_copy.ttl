@@ -46,15 +46,13 @@ pause 2
 ;コマンド実行
 sendln 'ls -la'
 
-;ログ記録終了
-logclose
+src_filename = ''
+strconcat src_filename macro_dir
+strconcat src_filename '\log\'
+strconcat src_filename filename 
+dst_filename = ''
+strconcat dst_filename macro_dir
+strconcat dst_filename '\log\part2\'
+strconcat dst_filename filename 
+filecopy src_filename dst_filename
 
-;ログ記録開始 テキストモード／追記モード 
-log_dir = ''
-strconcat log_dir macro_dir
-strconcat log_dir '\log'
-strconcat log_dir '\part2'
-changedir log_dir
-;messagebox log_dir 'debug'
-sprintf2 filename 'teratermlog_%s.log' timestr
-logopen filename 0 0

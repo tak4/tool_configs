@@ -1,0 +1,60 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;接続情報
+USERNAME = 'takashi'
+PASSWORD = 'lindbergh'
+HOSTADDR = '127.0.0.1'
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;マクロのあるディレクトリパスを取得
+getdir macro_dir
+;messagebox macro_dir 'debug'
+
+;接続パラメータを作成
+COMMAND = HOSTADDR
+strconcat COMMAND ' /ssh /auth=password /user='
+strconcat COMMAND USERNAME
+strconcat COMMAND ' /passwd='
+strconcat COMMAND PASSWORD
+strconcat COMMAND ' /f='
+strconcat COMMAND macro_dir
+strconcat COMMAND '\inifile\'
+strconcat COMMAND 'sample_ssh_setting.ini'
+;messagebox COMMAND 'debug'
+
+;接続
+connect COMMAND
+
+;ログフォルダ格納先を指定
+;changedirを機能させるには、
+;iniファイルでの Default Log Folderの指定を空欄にする必要がある
+log_dir = ''
+strconcat log_dir macro_dir
+strconcat log_dir '\log'
+;messagebox log_dir 'debug'
+changedir log_dir
+
+;ログ記録開始 テキストモード／追記モード 
+gettime timestr
+sprintf2 filename 'teratermlog_%s.log' timestr
+logopen filename 0 0
+
+;プロンプトなど特定の文字列が表示されるまで待機
+wait '$'
+
+pause 2
+
+;コマンド実行
+sendln 'ls -la'
+
+;ログ記録終了
+logclose
+
+;ログ記録開始 テキストモード／追記モード 
+log_dir = ''
+strconcat log_dir macro_dir
+strconcat log_dir '\log'
+strconcat log_dir '\part2'
+changedir log_dir
+;messagebox log_dir 'debug'
+sprintf2 filename 'teratermlog_%s.log' timestr
+logopen filename 0 0

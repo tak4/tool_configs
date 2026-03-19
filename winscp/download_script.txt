@@ -1,0 +1,17 @@
+# バッチモードを有効にする
+# option batch continue
+# option confirm off
+option echo on
+
+# サーバーに接続 (ユーザー名:パスワード@ホスト名)
+open sftp:takashi:lindbergh@127.0.0.1:22
+
+# 転送設定
+option transfer binary
+
+# 特定のファイルをダウンロード (複数指定可能)
+get /home/takashi/develop/sandbox/test.txt D:\develop\github\tool_configs\winscp\
+
+# 終了
+close
+exit

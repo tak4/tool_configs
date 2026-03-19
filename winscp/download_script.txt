@@ -4,7 +4,7 @@
 option echo on
 
 # サーバーに接続 (ユーザー名:パスワード@ホスト名)
-open sftp:takashi:lindbergh@127.0.0.1:22
+open sftp:user:xxxxxx@127.0.0.1:22
 
 # 転送設定
 option transfer binary

@@ -1,17 +1,26 @@
-# バッチモードを有効にする
-# option batch continue
-# option confirm off
+# batch continueでエラーがあっても継続
 option echo on
+option batch continue
 
 # サーバーに接続 (ユーザー名:パスワード@ホスト名)
-open sftp:user:xxxxxx@127.0.0.1:22
+open scp:username:password@127.0.0.1:22
 
 # 転送設定
-option transfer binary
+option transfer automatic
+
+# ディレクトリ移動
+cd /home/takashi/develop/sandbox/
 
 # 特定のファイルをダウンロード (複数指定可能)
-get /home/takashi/develop/sandbox/test.txt D:\develop\github\tool_configs\winscp\
+get *.txt download_files\
+get xxx.txt download_files\
+get testfile.bin download_files\
+get test.bin download_files\
+
+# 補足
+# 以下のようなワイルドカード指定は効かない為、
+# 先にcdでディレクトリ移動しておく
+# get /home/takashi/develop/sandbox/*.txt
 
 # 終了
-close
 exit

@@ -1,0 +1,70 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;接続情報
+USERNAME = ''
+PASSWORD = ''
+HOSTADDR = ''
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;マクロのあるディレクトリパスを取得
+getdir macro_dir
+;messagebox macro_dir 'debug'
+
+;接続パラメータを作成
+COMMAND = HOSTADDR
+strconcat COMMAND ' /ssh /auth=password /user='
+strconcat COMMAND USERNAME
+strconcat COMMAND ' /passwd='
+strconcat COMMAND PASSWORD
+strconcat COMMAND ' /f='
+strconcat COMMAND macro_dir
+strconcat COMMAND '\inifile\'
+strconcat COMMAND 'ubuntupc_ssh_setting.ini'
+;messagebox COMMAND 'debug'
+
+;接続
+connect COMMAND
+
+;ログフォルダ格納先を指定
+;changedirを機能させるには、
+;iniファイルでの Default Log Folderの指定を空欄にする必要がある
+log_dir = ''
+strconcat log_dir macro_dir
+strconcat log_dir '\log\'
+; messagebox log_dir 'debug'
+changedir log_dir
+
+; 日時を取得
+gettime timestr "%Y%m%d-%H%M%S"
+
+; ログファイル名に日時とユーザ名を入れる。
+sprintf2 filename 'console_%s.log' timestr
+
+;ログ記録開始 テキストモード／追記モード 
+logopen filename 0 0
+
+;プロンプトなど特定の文字列が表示されるまで待機
+wait '$'
+
+;; ファイル送信
+SEND_FILE_PATH = ''
+strconcat SEND_FILE_PATH macro_dir
+strconcat SEND_FILE_PATH '\test.txt'
+scpsend SEND_FILE_PATH '/home/takashi/develop/sandbox/tmp'
+
+;; ファイル送信プロセス確認
+do
+  mpause 5000
+  ; psコマンドでscpを含む行が何行あるかを取得する
+  sprintf2 str 'ps -ef |grep -v grep |grep -c scp'
+  sendln str
+  ; 0：タイムアウト するか 1：scpを含む行が1行(scp転送中)になるまで待つ
+  waitln '0' '1'
+loop while result != 1
+;; ファイル送信が完了すると次のマクロを実行
+sendln 'echo SCP finish'
+
+sendln 'cd /home/takashi/develop/sandbox/tmp'
+sendln 'ls -la'
+
+;ログ記録終了
+logclose

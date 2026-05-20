@@ -1,0 +1,24 @@
+# batch continueでエラーがあっても継続
+option echo on
+option batch continue
+
+# サーバーに接続 (ユーザー名:パスワード@ホスト名)
+open scp:username:password@127.0.0.1:22
+
+# 転送設定
+option transfer automatic
+
+# ディレクトリ移動
+cd /home/takashi/develop/sandbox/
+
+# ファイル一覧を出力し、対象ファイルをダウンロード、削除する
+ls
+get dummy.bin download_files\
+rm dummy.bin
+
+# memo
+# テスト用binファイル作成
+# dd if=/dev/zero of=dummy.bin bs=1M count=10
+
+# 終了
+exit
